@@ -31,9 +31,20 @@ function App() {
     })
   }
 
-  const createNote = (e) => {
+  const createNote = async (e) => {
     e.preventDefault();
-    console.log('submir')
+    // Create the note
+    const res = await axios.post("http://localhost:3002/notes", createForm)
+    //Update the stae
+    SetNotes([...notes, res.data.note])
+    console.log(res)
+
+    // Clear form state
+    setCreateForm({title: '', body: ''})
+  }
+
+  const deleteNote = () => {
+    
   }
 
   return (
@@ -44,6 +55,7 @@ function App() {
       {notes && notes.map(note => {
         return <div key={note._id}> 
           <h3>{note.title}</h3>
+          <button>Delete note</button>
         </div>
       })}
       </div>
